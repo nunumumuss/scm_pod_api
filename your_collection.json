@@ -1,0 +1,22 @@
+{
+    "info": {
+        "name": "FastAPI API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "checkin",
+            "request": {
+                "url": "http://localhost:8000/checkin",
+                "method": "GET"
+            }
+        },
+        {
+            "name": "upload",
+            "request": {
+                "url": "http://localhost:8000/upload",
+                "method": "POST"
+            }
+        }
+    ]
+}
