@@ -291,5 +291,5 @@ def Loaded(
     if rowcount == 0: 
         raise HTTPException(status_code=404, detail="No data found")
     else:
-        return {"message": "Update successful", "rows_updated": rowcount}
+        return {"message": "Update successful", "rows_updated": rowcount} 
     
