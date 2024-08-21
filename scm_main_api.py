@@ -159,7 +159,7 @@ def checkin(
 #in process
 ######################################
 @app.post("/pod_checkin")
-def checkin(
+def Parameters(
     car_license: str    
     ):
     # Fetch shipment data
@@ -173,7 +173,7 @@ def checkin(
 
 # Get Shipment list where the pick_status is 'Picking‘ OR ‘Picked’
 @app.get("/pod_picked")
-def picked(
+def Parameters(
     car_license: str 
     ):
     # Fetch shipment data
@@ -202,7 +202,7 @@ def Parameters(
     str_sql = "select * from warehouse"
     
     result = sql_query(str_sql)
-    print(result)
+    # print(result)
 
     if not result:
         raise HTTPException(status_code=404, detail="No data found")
@@ -210,7 +210,7 @@ def Parameters(
     return {"results": result}
 
 @app.get("/pod_loaded")
-def Loaded(
+def Parameters(
      car_license: str   
     ):
     # Fetch shipment data
@@ -233,7 +233,7 @@ def Loaded(
 
 
 @app.post("/pod_loaded")
-def Loaded(
+def Parameters(
      car_license: str   
     ):
     # Update delivery header(doh) 
@@ -253,7 +253,7 @@ def Loaded(
         return {"message": "Update successful", "rows_updated": rowcount}
         
 @app.post("/pod_loaded")
-def Loaded(
+def Parameters(
      car_license: str   
     ):
     # Update delivery header(doh) 
@@ -274,7 +274,7 @@ def Loaded(
         
  
 @app.post("/pod_cfdelivery")
-def Loaded(
+def Parameters(
      car_license: str   
     ):
     # Update delivery header(doh) 
@@ -293,3 +293,24 @@ def Loaded(
     else:
         return {"message": "Update successful", "rows_updated": rowcount} 
     
+@app.get("/pod_cfdelivery")
+def Parameters(
+     bill_no: str   
+    ):
+    
+    # Fetch cusname data
+    str_sql = f"""SELECT d.cusname, s.load_stat,stat as do_stat, 
+                        IFNULL(s.cfdate, '') AS cfdate
+                  FROM doh d
+                  INNER JOIN shipment s
+                  ON d.shipid = s.shipid 
+                  WHERE d.billno = '{bill_no}';
+                """
+    print(str_sql)
+    result = sql_query(str_sql)
+    print(result)
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No data found")
+
+    return {"results": result}
