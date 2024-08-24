@@ -155,7 +155,7 @@ def get_shipment(lat, lon, max_warehouse_distance_km, car_license):
             connection.close()
 
 # Get Shipment list where the distance between the geolocation of the agent and the warehouse site within max_warehouse_distance_km Kilometer 
-@router_pod.get("/checkin")
+@router_pod.get("/pod_checkin")
 def checkin(
     car_license: str,
     latitude: float,
@@ -171,7 +171,7 @@ def checkin(
 
 # Get Shipment list where the distance between the geolocation of the agent and the warehouse site within max_warehouse_distance_km Kilometer 
 
-@router_pod.post("/checkin")
+@router_pod.post("/pod_checkin")
 def Parameters(
     ship_id: List[str]
 ):
@@ -191,7 +191,7 @@ def Parameters(
     
     
 # Get Shipment list where the pick_status is 'Picking‘ OR ‘Picked’
-@router_pod.get("/picked")
+@router_pod.get("/pod_picked")
 def Parameters(
     car_license: str 
     ):
@@ -213,7 +213,7 @@ def Parameters(
     return {"results": result}
  
  
-@router_pod.get("/warehouse")
+@router_pod.get("/pod_warehouse")
 def Parameters(
     
     ):
@@ -228,7 +228,7 @@ def Parameters(
 
     return {"results": result}
 
-@router_pod.get("/loaded")
+@router_pod.get("/pod_loaded")
 def Parameters(
      car_license: str   
     ):
@@ -251,7 +251,7 @@ def Parameters(
     return {"results": result}
 
         
-@router_pod.post("/loaded")
+@router_pod.post("/pod_loaded")
 def Parameters(
     ship_id: List[str]
     ):
@@ -274,7 +274,7 @@ def Parameters(
         return {"message": "Update successful", "rows_updated": rowcount}
         
 # Post -- Confirm Delivery (Êè§¢Í§ÊÓàÃç¨\äÁèÊÓàÃç¨)
-@router_pod.post("/cfdelivery")
+@router_pod.post("/pod_cfdelivery")
 def Parameters(
      bill_no: str,
      action: str,
@@ -315,7 +315,7 @@ def Parameters(
     return {"message": "Update successful", "rows_updated": rowcount}
         
 # Post -- Reverse Delivery (à»ÅÕèÂ¹Ê¶Ò¹ÐÊè§¢Í§ãËÁè)
-@router_pod.post("/rvdelivery")
+@router_pod.post("/pod_rvdelivery")
 def Parameters(
      bill_no: str,
      remark : str
@@ -337,7 +337,7 @@ def Parameters(
     
     
 # Get -- Confirm Delivery
-@router_pod.get("/cfdelivery")
+@router_pod.get("/pod_cfdelivery")
 def Parameters(
      bill_no: str   
     ):
@@ -360,7 +360,7 @@ def Parameters(
     return {"results": result}
 
 # Get -- User (Log in)
-@router_user.get("/user")
+@router_user.get("/pod_user")
 def Parameters(
      username: str,
      password: str   
@@ -381,7 +381,7 @@ def Parameters(
     return {"results": result}
 
 # Post -- Update Account (µéÍ§¡ÒÃÍÑ¾à´µ¢éÍÁÙÅãËÁè)
-@router_user.post("/updateAccount")
+@router_user.post("/pod_updateAccount")
 def Parameters(
      password: str,
      car_license: str,
@@ -403,7 +403,7 @@ def Parameters(
         return {"message": "Update successful", "rows_updated": rowcount}
     
 # Post -- Update Password (forget password)
-@router_user.post("/updatePassword")
+@router_user.post("/pod_updatePassword")
 def Parameters(
      username: str,
      car_license: str,
@@ -424,7 +424,7 @@ def Parameters(
 
 # Post -- Insert New Account (ÊÁÑ¤Ã Account ãËÁè)    
  
-@router_user.post("/insertNewAcc")
+@router_user.post("/pod_insertNewAcc")
 def Parameters(
      username: str,
      email: str,
@@ -450,7 +450,7 @@ def Parameters(
 
 
 # Get Shipment list where the pick_status is 'Picking‘ OR ‘Picked’
-@router_pod.get("/deliverylog")
+@router_pod.get("/pod_deliverylog")
 def Parameters(
     car_license: str 
     ):
@@ -475,4 +475,4 @@ def Parameters(
 # Include the router in the FastAPI app
 app.include_router(router_pod, prefix="", tags=["pod"])
 app.include_router(router_other, prefix="", tags=["other"])
-app.include_router(router_user, prefix="", tags=["usr"])
+app.include_router(router_user, prefix="", tags=["user"])
