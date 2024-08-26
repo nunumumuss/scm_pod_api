@@ -176,7 +176,7 @@ def Parameters(
     ship_id: List[str]
 ):
     
-    # á»Å§ ship_id à»ç¹ÊµÃÔ§ã¹ÃÙ»áºº ('6100155477', '6100155530')
+    # แปลง ship_id เป็นสตริงในรูปแบบ ('6100155477', '6100155530')
     ship_id_str = '(' + ', '.join(f"'{id}'" for id in ship_id) + ')'
     str_sql = f"""UPDATE shipment SET load_stat = 'Check In', cidate = NOW() 
                 WHERE shipid IN {ship_id_str}"""
@@ -258,7 +258,7 @@ def Parameters(
     # Update delivery header(doh) 
     # load_stat = ‘In-Transit’ 
     # vddate = system date time
-    # á»Å§ ship_id à»ç¹ÊµÃÔ§ã¹ÃÙ»áºº ('6100155477', '6100155530')
+    # แปลง ship_id เป็นสตริงในรูปแบบ ('6100155477', '6100155530') 
     ship_id_str = '(' + ', '.join(f"'{id}'" for id in ship_id) + ')'
     str_sql = f""" update shipment set load_stat = 'In-Transit',  vddate = NOW()
                    WHERE shipid IN {ship_id_str}          
@@ -282,11 +282,11 @@ def Parameters(
      img_url: str
     ):
     
-    # *** ÊÓ¤Ñ­ **** 
-    # ¡ÓË¹´ action ãËé fix ¢éÍ¤ÇÒÁ
+    # *** สำคัญ **** 
+    # กำหนด action ให้ fix ข้อความ
     # 0 = Delivered , 1 = Failed
     
-    # ãªéàªç¤ action
+    # ใช้เช็ค action
     # if action == 'success' :
     #     action_state = 'Delivered'
     # else :
@@ -314,7 +314,7 @@ def Parameters(
             print('äÁè update Ê¶Ò¹Ð shipment ÃÇÁ')
     return {"message": "Update successful", "rows_updated": rowcount}
         
-# Post -- Reverse Delivery (à»ÅÕèÂ¹Ê¶Ò¹ÐÊè§¢Í§ãËÁè)
+# Post -- Reverse Delivery (เปลี่ยนสถานะส่งของใหม่)
 @router_pod.post("/pod_rvdelivery")
 def Parameters(
      bill_no: str,
@@ -380,7 +380,7 @@ def Parameters(
 
     return {"results": result}
 
-# Post -- Update Account (µéÍ§¡ÒÃÍÑ¾à´µ¢éÍÁÙÅãËÁè)
+# Post -- Update Account (ต้องการอัพเดตข้อมูลใหม่)
 @router_user.post("/pod_updateAccount")
 def Parameters(
      password: str,
@@ -422,8 +422,7 @@ def Parameters(
     else:
         return {"message": "Update successful", "rows_updated": rowcount}
 
-# Post -- Insert New Account (ÊÁÑ¤Ã Account ãËÁè)    
- 
+# Post -- Insert New Account (สมัคร Account ใหม่)  
 @router_user.post("/pod_insertNewAcc")
 def Parameters(
      username: str,
@@ -435,7 +434,7 @@ def Parameters(
      car_license: str,
     ):
     
-   #¡ÓË¹´ãËé account ãËÁè ·ÕèÊÃéÒ§ÁÒµéÍ§ËéÒÁÁÕ username, car_license «éÓ¡Ñº¢éÍÁÙÅ·ÕèÁÕÍÂÙè
+   #กำหนดให้ account ใหม่ ที่สร้างมาต้องห้ามมี username, car_license ซ้ำกับข้อมูลที่มีอยู่
     str_sql = f""" INSERT INTO users (username, email, password, pin, latitude, longitude, car_license)
                     SELECT '{username}', '{email}', '{password}', '{pin}', {latitude}, {longitude}, '{car_license}'
                     WHERE NOT EXISTS (SELECT 1 FROM users WHERE car_license = '{car_license}' OR username = '{username}')
